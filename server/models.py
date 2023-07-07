@@ -55,9 +55,9 @@ class CarFeature(db.Model, SerializerMixin):
     car_id = db.Column(db.Integer, db.ForeignKey('cars.id'), nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updates_at = db.Column(db.DateTime, onupdate=db.func.now())
-    # @validates('transmission')
-    # def validate_transmission(self,key,transmission):
-    #     valid_transmission = ['automatic', 'manual']
-    #     if transmission not in valid_transmission:
-    #         raise ValueError("Invalid transmission type")
-    #     return transmission
+    @validates('transmission')
+    def validate_transmission(self,key,transmission):
+        valid_transmission = ['automatic', 'manual']
+        if transmission not in valid_transmission:
+            raise ValueError("Invalid transmission type")
+        return transmission
