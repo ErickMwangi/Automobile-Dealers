@@ -15,49 +15,117 @@ app = Flask(
 )
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///automobile.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.json.compact = False
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 migrate = Migrate(app, db)
 db.init_app(app)
 
+
+
 @app.route('/')
-@app.route('/<int:id>')
-def index(id=0):
-    return render_template("index.html")
-api = Api(app)
-
-class Cars(Resource):
-    def get(self):
-        cars = [car.to_dict() for car in Car.query.all()]
-        return make_response(jsonify(cars), 200)
-    def post(self):
-        data = request.get_json()
-        new_car = Car(
-            name=data['name'],
-            model=data['model'],
-            image=data['image'],
-        )
-        db.session.add(new_car)
-        db.session.commit()
-        return make_response(new_car.to_dict(), 201)
-api.add_resource(Cars, '/cars')
-
-class CarByID(Resource):
-    def get(self, id):
-        car = Car.query.filter_by(id=id).first().to_dict()
-        return make_response(jsonify(car), 200)
-    def patch(self, id):
-        data = request.get_json()
-        car = Car.query.filter_by(id=id).first()
-        for attr in data:
-            setattr(car, attr, data[attr])
+def home():
+    return '<h1>Automobile Get Api</h1>'
+@app.route('/cars')
+def cars():
+    cars=[]
+    for car in Car.query.all():
+        car_dict={
+            "id":car.id,
+            "name":car.name,
+            "model":car.model
+        }
+        cars.append(car_dict)
+        response=make_response(
+            jsonify(cars),
+            200
+             )
+    return response
+@app.route('/cars/<int:id>',methods=['GET','PATCH','DELETE'])
+def car_by_id(id):
+    car=Car.query.filter_by(id=id).first()
+    if request.method == 'GET':
+        if car:
+            car_data={
+            "id":car.id,
+            "name":car.name,
+            "model":car.model
+            }
+            response=make_response(
+              jsonify(car_data),
+              200
+            )
+        # response.headers['content-Type']='application/json'
+            return response
+        else:
+            # Return the error JSON response with appropriate HTTP status code
+            return {
+                'error': 'car not found'
+            }, 404
+    elif request.method == 'PATCH':
+        for attr in request.form:
+            setattr(car, attr, request.form.get(attr))
+            
         db.session.add(car)
         db.session.commit()
-        return make_response(car.to_dict(), 200)
-    def delete(self, id):
-        car = Car.query.filter_by(id=id).first()
-        db.session.delete(car)
-        db.session.commit()
-        return make_response('', 204)
+
+        car_dict = car.to_dict()
+
+        response = make_response(
+                jsonify(car_dict),
+                200
+            )
+
+        return response
     
-api.add_resource(CarByID, '/cars/<int:id>')
+    elif request.method == 'DELETE':
+            db.session.delete(car)
+            db.session.commit()
+
+            response_body = {
+                "delete_successful": True,
+                "message": "Car deleted."    
+            }
+
+            response = make_response(
+                jsonify(response_body),
+                200
+            )
+
+            return response
+    
+      
+@app.route('/features', methods=['GET','POST'])
+def get_features():
+    features = Feature.query.all()
+    if request.method == 'GET':
+        feature_data = []
+        for feature in features:
+            feature_data.append({
+                "id": feature.id,
+                "name": feature.name,
+                "description": feature.description
+            })
+        response = make_response(jsonify(feature_data), 200)
+        return response
+
+    elif request.method == 'POST':
+        new_feature = Feature(
+            name=request.form.get("name"),
+            description=request.form.get("description"),
+            
+        )
+
+        db.session.add(new_feature)
+        db.session.commit()
+
+        feature_dict = new_feature.to_dict()
+
+        response = make_response(
+            jsonify(feature_dict),
+            201
+        )
+
+        return response
+
+if __name__ == '__main__':
+    app.run(port=5555)
