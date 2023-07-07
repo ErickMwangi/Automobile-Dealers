@@ -7,7 +7,7 @@ function NewCarForm({ onAddCar }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    fetch("/cars", { 
+    fetch("http://127.0.0.1:5555/cars", { 
       method: "POST",
       headers: {
         "Content-Type": "application/json",

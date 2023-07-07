@@ -6,6 +6,7 @@ from models import db, Car, car_features, Feature
 from dotenv import load_dotenv
 
 load_dotenv()
+from flask_cors import CORS
 
 app = Flask(
     __name__,
@@ -16,6 +17,8 @@ app = Flask(
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///automobile.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+
+CORS(app)
 
 migrate = Migrate(app, db)
 db.init_app(app)
@@ -32,7 +35,9 @@ def cars():
         car_dict={
             "id":car.id,
             "name":car.name,
-            "model":car.model
+            "model":car.model,
+            "image":car.image
+            
         }
         cars.append(car_dict)
         response=make_response(
@@ -48,7 +53,8 @@ def car_by_id(id):
             car_data={
             "id":car.id,
             "name":car.name,
-            "model":car.model
+            "model":car.model,
+            "image":car.image
             }
             response=make_response(
               jsonify(car_data),
