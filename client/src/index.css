@@ -148,3 +148,10 @@ input:focus {
     width: calc(20% - 2rem);
   }
 }
+
+.delete-button{
+  background-color: rgb(243, 91, 104);
+  border-radius: 4px;
+  color: white;
+
+}
