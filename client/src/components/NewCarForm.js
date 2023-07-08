@@ -40,6 +40,7 @@ function NewCarForm({ onAddCar }) {
           placeholder="Car name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
         />
         <input
           type="text"
@@ -47,6 +48,7 @@ function NewCarForm({ onAddCar }) {
           placeholder="Model"
           value={model}
           onChange={(e) => setModel(e.target.value)}
+          required
         />
         <input
           type="text"
@@ -54,6 +56,7 @@ function NewCarForm({ onAddCar }) {
           placeholder="Image URL"
           value={image}
           onChange={(e) => setImage(e.target.value)}
+          required
         />
         <button type="submit">Add Car</button>
       </form>

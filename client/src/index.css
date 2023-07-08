@@ -155,3 +155,90 @@ input:focus {
   color: white;
 
 }
+
+.navigation-bar{
+  background-color: #027BD3;
+  width: 255px;
+  padding: 10px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.vertical-line {
+  border-left: 2px solid rgb(255, 255, 255);
+  height: 20px;
+  top: 9px;
+  left: 102px;
+  position: absolute;
+  top: 28px;
+}
+
+.vertical-line2 {
+  border-left: 2px solid rgb(255, 255, 255);
+  height: 20px;
+  top: 9px;
+  left: 179px;
+  top: 28px;
+  position: absolute;
+}
+
+.navLink{
+  color: #ffffff;
+  padding-right: 9px;
+}
+
+.key-image{
+  position: absolute;
+  width: 18%;
+  left: 14%;
+  top: 39%;
+  text-align: center;
+  z-index: 1;
+  
+}
+
+.home-div{
+  background-color: #027BD3;
+  width: 500px;
+  height: 300px;
+  left: 30%;
+  position: relative;
+
+}
+
+.footer {
+  position: relative;
+  bottom:0;
+  right:1.9%;
+  width:102.4%;
+  height: 90px;
+  background-color: #000533;
+}
+
+.footer-text{
+  text-align: center;
+  color: #ffffff;
+  padding-top: 25px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.welcome-message{
+  text-align: center;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: #02a086;
+  font-size: 35px;
+}
+
+.title{
+  text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: rgb(0, 0, 168);
+  font-size: 60px;
+  padding: 30px;
+}
+
+.blue-car{
+  text-align: center;
+  width: 87%;
+
+}
