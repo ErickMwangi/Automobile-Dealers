@@ -3,9 +3,9 @@ from flask import Flask, jsonify, request, make_response, render_template
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from models import db, Car, car_features, Feature
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 from flask_cors import CORS
 
 app = Flask(
@@ -99,39 +99,43 @@ def car_by_id(id):
 
             return response
     
-      
-@app.route('/features', methods=['GET','POST'])
-def get_features():
-    features = Feature.query.all()
+
+@app.route('/features', methods=['GET', 'POST'])
+def features():
     if request.method == 'GET':
-        feature_data = []
-        for feature in features:
-            feature_data.append({
+        features = Feature.query.all()
+        feature_data = [
+            {
                 "id": feature.id,
                 "name": feature.name,
                 "description": feature.description
-            })
-        response = make_response(jsonify(feature_data), 200)
-        return response
+            }
+            for feature in features
+        ]
+        return jsonify(feature_data), 200
 
     elif request.method == 'POST':
-        new_feature = Feature(
-            name=request.form.get("name"),
-            description=request.form.get("description"),
-            
-        )
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "Invalid JSON"}), 400
 
+        name = data.get('name')
+        description = data.get('description')
+
+        if not name or not description:
+            return jsonify({"error": "Missing required fields"}), 400
+
+        new_feature = Feature(name=name, description=description)
         db.session.add(new_feature)
         db.session.commit()
 
-        feature_dict = new_feature.to_dict()
+        feature_dict = {
+            "id": new_feature.id,
+            "name": new_feature.name,
+            "description": new_feature.description
+        }
 
-        response = make_response(
-            jsonify(feature_dict),
-            201
-        )
-
-        return response
+        return jsonify(feature_dict), 201
 
 if __name__ == '__main__':
     app.run(port=5555)

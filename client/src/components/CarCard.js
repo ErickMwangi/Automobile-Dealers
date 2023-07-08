@@ -5,12 +5,13 @@ function CarCard({ car }) {
   const { id, name, image } = car;
 
   const handleDeleteClick = () => {
-    fetch(`http://127.0.0.1:5000/cars/${id}`, {
+    fetch(`http://127.0.0.1:5555/cars/${id}`, {
       method: "DELETE"
     })
       .then(response => {
         if (response.ok) {
           // Handle successful deletion here (e.g., update state)
+          window.location.reload(); // Refresh the page
         } else {
           throw new Error("Failed to delete car");
         }

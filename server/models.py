@@ -46,18 +46,18 @@ class Feature(db.Model, SerializerMixin):
     #     if len(description) < 25:
     #         raise ValueError("Description must be atleast 250 characters long")
     #     return description
-class CarFeature(db.Model, SerializerMixin):
-    __tablename__ = 'car_features'
-    serialize_rules = ('-car.car_features', '-feature.car_features',)
-    id = db.Column(db.Integer, primary_key=True)
-    transmission = db.Column(db.String)
-    feature_id = db.Column(db.Integer, db.ForeignKey('features.id'), nullable=False)
-    car_id = db.Column(db.Integer, db.ForeignKey('cars.id'), nullable=False)
-    created_at = db.Column(db.DateTime, server_default=db.func.now())
-    updates_at = db.Column(db.DateTime, onupdate=db.func.now())
-    @validates('transmission')
-    def validate_transmission(self,key,transmission):
-        valid_transmission = ['automatic', 'manual']
-        if transmission not in valid_transmission:
-            raise ValueError("Invalid transmission type")
-        return transmission
+# class CarFeature(db.Model, SerializerMixin):
+#     __tablename__ = 'car_features'
+#     serialize_rules = ('-car.car_features', '-feature.car_features',)
+#     id = db.Column(db.Integer, primary_key=True)
+#     transmission = db.Column(db.String)
+#     feature_id = db.Column(db.Integer, db.ForeignKey('features.id'), nullable=False)
+#     car_id = db.Column(db.Integer, db.ForeignKey('cars.id'), nullable=False)
+#     created_at = db.Column(db.DateTime, server_default=db.func.now())
+#     updates_at = db.Column(db.DateTime, onupdate=db.func.now())
+    # @validates('transmission')
+    # def validate_transmission(self,key,transmission):
+    #     valid_transmission = ['automatic', 'manual']
+    #     if transmission not in valid_transmission:
+    #         raise ValueError("Invalid transmission type")
+    #     return transmission
