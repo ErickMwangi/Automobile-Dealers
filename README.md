@@ -56,11 +56,12 @@ cd Quotes-Web-App
 ```
 ## Some Screenshots
 * Homepage
-![Homepage Image](client/build/images/homepage.png)
+![Homepage Image](client/build/images/homepage.jpeg)
+
 <br />
 
 * Carpage
-![Carpage Image](client/build/images/carpage.png)
+![Carpage Image](client/build/images/carpage.jpeg)
 
 # Known Bugs
 * There are no known bugs of this project at the moment
