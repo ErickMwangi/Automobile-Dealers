@@ -56,12 +56,12 @@ cd Quotes-Web-App
 ```
 ## Some Screenshots
 * Homepage
-![Homepage Image](/home/alien2/Development/projects/Automobile-Dealers/client/build/images/homepage.jpeg)
+'![Homepage Image](client/build/images/homepage.jpeg)'
 
 <br />
 
 * Carpage
-![Carpage Image](./home/alien2/Development/projects/Automobile-Dealers/client/build/images/carpage.jpeg)
+'![Carpage Image](client/build/images/carpage.jpeg)'
 
 # Known Bugs
 * There are no known bugs of this project at the moment
