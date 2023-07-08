@@ -36,7 +36,7 @@ def cars():
             "id":car.id,
             "name":car.name,
             "model":car.model,
-            "image":car.image
+            "image":car.image,
             
         }
         cars.append(car_dict)
@@ -108,7 +108,8 @@ def features():
             {
                 "id": feature.id,
                 "name": feature.name,
-                "description": feature.description
+                "description": feature.description,
+                "image": feature.image
             }
             for feature in features
         ]
@@ -121,21 +122,54 @@ def features():
 
         name = data.get('name')
         description = data.get('description')
+        image = data.get('image')
 
-        if not name or not description:
+        if not name or not description or not image:
             return jsonify({"error": "Missing required fields"}), 400
 
-        new_feature = Feature(name=name, description=description)
+        new_feature = Feature(name=name, description=description, image=image)
         db.session.add(new_feature)
         db.session.commit()
 
         feature_dict = {
             "id": new_feature.id,
             "name": new_feature.name,
-            "description": new_feature.description
+            "description": new_feature.description,
+            "image": new_feature.image
         }
 
         return jsonify(feature_dict), 201
+@app.route('/cars', methods=['GET', 'POST'])
+def handle_cars():
+    if request.method == 'GET':
+        cars = []
+        for car in Car.query.all():
+            car_dict = {
+                "id": car.id,
+                "name": car.name,
+                "model": car.model,
+                "image": car.image
+            }
+            cars.append(car_dict)
+        response = make_response(jsonify(cars), 200)
+        return response
+    elif request.method == 'POST':
+        data = request.get_json()
+        new_car = Car(
+            name=data.get("name"),
+            model=data.get("model"),
+            image=data.get("image")
+        )
+        db.session.add(new_car)
+        db.session.commit()
+        car_dict = {
+            "id": new_car.id,
+            "name": new_car.name,
+            "model": new_car.model,
+            "image": new_car.image
+        }
+        response = make_response(jsonify(car_dict), 201)
+        return response
 
 if __name__ == '__main__':
     app.run(port=5555)
