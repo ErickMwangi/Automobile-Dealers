@@ -36,7 +36,7 @@ git clone https://github.com/ErickMwangi/Automobile-Dealers
 ```
 * Open terminal and navigate to the directory of the project
 ```
-cd Quotes-Web-App
+cd Automobile-Dealers
 ```
 * Run the following command to install the back-end dependencies
 ```
